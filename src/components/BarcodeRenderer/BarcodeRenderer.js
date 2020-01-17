@@ -12,23 +12,41 @@ class BarcodeRenderer extends React.Component {
 
     // props.useTimeAsData: Use the time in milliseconds as the barcode data
     // props.data: Use props.data as the barcode data (overridden by useTimeAsData)
-    // props.prefix: Add a prefix to the barcode data
+    // props.prefix: Add a prefix to the barcode dat
+    // props.options {
+    //  border: boolean (barcode surrounded by a border),
+    //  borderWidth: integer (border line width),
+    //  borderPadding: integer (border padding in px)
+    //  text: string (text over the barcode)
+    //  fontSize: integer (size of the font)
+    // }
 
+    constructor(props){
+        super(props);
+        this.state = { 
+          dataUrlLoaded: false,
+          dataURL: "undefined" 
+        }
+      }
+    
     render() {
         // Get classes
         const { classes } = this.props;
         // Define the data of the barcode
-        var data = (this.props.useTimeAsData)? Date.now().toString() : 
-                        (this.props.data)? this.props.data:
-                            "undefined barcode" ;
-        // Add Prefix if included
-        if (this.props.prefix)
-            data = this.props.prefix + data;
+        var data = (this.props.data)? this.props.data : "undefined barcode" ;
         // Generate source of the barcode
-        let barcode_src = BarcodeGenerator.generate(data);
+        if (!this.state.dataUrlLoaded){
+            BarcodeGenerator.generate(data, this.props.options)
+            .then((dataURL) => {
+                this.setState({
+                    dataUrlLoaded: true,
+                    dataURL: dataURL
+                });
+            });
+        }
         // Render
         return (
-            <img className={classes.barcode_renderer} src={barcode_src} />
+            <img className={classes.barcode_renderer} src={this.state.dataURL} />
         )
     }
 }

@@ -7,18 +7,42 @@ export default {
 };
 
 export const SimpleBarcode = () => (
-    <BarcodeRenderer data={"Simple Barcode"}></BarcodeRenderer>
+    <BarcodeRenderer 
+        data={"Simple Barcode"}>
+    </BarcodeRenderer>
 );
 
-export const UseTimeAsData = () => (
-    <BarcodeRenderer useTimeAsData>Use Time As Data</BarcodeRenderer>
+export const BarcodeWithBorder = () => (
+    <BarcodeRenderer 
+        data={"Barcode With Border"} 
+        options={{
+            border: true, 
+            borderWidth: 10,
+            borderPadding: 20 }}>
+    </BarcodeRenderer>
 );
 
-export const WithPrefix = () => (
-    <BarcodeRenderer useTimeAsData prefix={"MV"}>Use Time As Data</BarcodeRenderer>
+export const BarcodeWithText = () => (
+    <BarcodeRenderer 
+        data={"Barcode With Text"} 
+        options={{
+            border: true, 
+            borderWidth: 10,
+            borderPadding: 20,
+            text: "Lorem Ipsum",
+            fontSize: 40 }}>
+    </BarcodeRenderer>
 )
 
-export const UndefinedBarcode = () => (
-    <BarcodeRenderer></BarcodeRenderer>
+export const BarcodeWithPrefix = () => (
+    <BarcodeRenderer 
+    data={"Barcode With Prefix"} 
+    options={{
+        border: true, 
+        borderWidth: 10,
+        borderPadding: 20,
+        text: "Lorem Ipsum",
+        fontSize: 40,
+        prefix: "MV-"}}>
+</BarcodeRenderer> 
 )
-
