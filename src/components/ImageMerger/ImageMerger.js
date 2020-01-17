@@ -1,29 +1,20 @@
 export default class ImageMerger {
-    
-    static _preloadImagesProcess(srcs){
+
+    static mergeAndReturnDataURLs(sources, rows, columns, row_sep, col_sep){
+        // Calculate the amount of pages
+        var pages = Math.ceil(sources.length / (rows * columns));
+        // Generate each page for each subset of sources
         var promises = [];
-        for (let i = 0; i < srcs.length; i++){
-            promises.push(this._loadImageProcess(srcs[i]));
+        for (let i = 0; i < pages; i++){
+            let start = i * rows * columns;
+            let end =  ( (start + rows * columns) < sources.length)? (start + rows * columns) : (sources.length);
+            let subset = sources.slice(start, end);
+            promises.push(this._mergeToPage(subset, rows, columns, row_sep, col_sep));
         }
         return Promise.all(promises);
     }
 
-    static _loadImageProcess(src){
-        return new Promise((resolve, reject) => {
-            var image = new Image();
-            image.onload = function() {
-                resolve(image);
-            };
-            image.onerror = image.onabort = function() {
-                reject(src);
-            };
-            image.crossOrigin = "Anonymous";
-            image.src = "https://cors-anywhere.herokuapp.com/" + src;
-        });
-    }
-
-
-    static mergeToDataURL(sources, rows = 4, columns = 2, row_sep = 200, col_sep = 200){
+    static _mergeToPage(sources, rows = 4, columns = 2, row_sep = 200, col_sep = 200){
         return new Promise((resolve, reject) => {
             // Preload all of the sources
             this._preloadImagesProcess(sources).then(function(imgs){
@@ -86,12 +77,31 @@ export default class ImageMerger {
                 console.error("At least one image failed to load");
                 reject();
             });
-
         })
-        
-        
-        
     }
+
+    static _preloadImagesProcess(srcs){
+        var promises = [];
+        for (let i = 0; i < srcs.length; i++){
+            promises.push(this._loadImageProcess(srcs[i]));
+        }
+        return Promise.all(promises);
+    }
+
+    static _loadImageProcess(src){
+        return new Promise((resolve, reject) => {
+            var image = new Image();
+            image.onload = function() {
+                resolve(image);
+            };
+            image.onerror = image.onabort = function() {
+                reject(src);
+            };
+            image.crossOrigin = "Anonymous";
+            image.src = "https://cors-anywhere.herokuapp.com/" + src;
+        });
+    }
+
     
 
 }

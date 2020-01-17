@@ -7,7 +7,8 @@ const useStyles = theme => ({
   'imgContainer' : {
     width: "100%", 
     '& img' : {
-      width: "100%"
+      width: "100%",
+      'margin-bottom': '150px'
     }
   }
 });
@@ -25,8 +26,8 @@ class BarcodeBulkGenerator extends React.Component {
   constructor(props){
     super(props);
     this.state = { 
-      image_loaded: false,
-      image: "undefined" 
+      dataUrlsLoaded: false,
+      dataURLs: [] 
     }
   }
 
@@ -34,19 +35,21 @@ class BarcodeBulkGenerator extends React.Component {
     // Get classes
     const { classes } = this.props;
     // Obtain the images
-    if (!this.state.image_loaded){
+    if (!this.state.dataUrlsLoaded){
       BarcodeGenerator.bulk_generate(this.props.data, this.props.rows, this.props.columns)
-      .then((dataURL) => {
+      .then((dataURLs) => {
         this.setState({
-          image_loaded: true,
-          image : dataURL
+          dataUrlsLoaded: true,
+          dataURLs : dataURLs
         });
       });
     }
+    // Create an image for each dataURLs saved in props.state
+    var items = this.state.dataURLs.map((src) => <img src={src}/> );
     // Render
     return (
       <div className={classes.imgContainer}>
-        <img src={this.state.image}/>
+        {items}
       </div>
     )
 
