@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 const useStyles = theme => ({
     'barcode_renderer' : {
-        width: "100%"
+        width: "auto"
     }
 });
 
@@ -24,7 +24,7 @@ class BarcodeRenderer extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
-          dataUrlLoaded: false,
+          dataURLReady: false,
           dataURL: "undefined" 
         }
       }
@@ -35,13 +35,10 @@ class BarcodeRenderer extends React.Component {
         // Define the data of the barcode
         var data = (this.props.data)? this.props.data : "undefined barcode" ;
         // Generate source of the barcode
-        if (!this.state.dataUrlLoaded){
-            BarcodeGenerator.generate(data, this.props.options)
-            .then((dataURL) => {
-                this.setState({
-                    dataUrlLoaded: true,
-                    dataURL: dataURL
-                });
+        if (!this.state.dataURLReady){
+            this.setState({
+                dataURLReady: true,
+                dataURL: BarcodeGenerator.generate(data, this.props.options)
             });
         }
         // Render

@@ -1,9 +1,11 @@
 import React from 'react';
 import BarcodeRenderer from './BarcodeRenderer';
-
+import JsBarcode from 'jsbarcode';
 
 export default { 
     title: 'Barcode Renderer'
+
+    
 };
 
 export const SimpleBarcode = () => (
@@ -11,6 +13,7 @@ export const SimpleBarcode = () => (
         data={"Simple Barcode"}>
     </BarcodeRenderer>
 );
+
 
 export const BarcodeWithBorder = () => (
     <BarcodeRenderer 
@@ -27,10 +30,10 @@ export const BarcodeWithText = () => (
         data={"Barcode With Text"} 
         options={{
             border: true, 
-            borderWidth: 10,
+            borderWidth: 3,
             borderPadding: 20,
             text: "Lorem Ipsum",
-            fontSize: 40 }}>
+            fontSize: 20 }}>
     </BarcodeRenderer>
 )
 

@@ -34,9 +34,11 @@ class BarcodeBulkGenerator extends React.Component {
   render() {
     // Get classes
     const { classes } = this.props;
+    // Prepare the options
+
     // Obtain the images
     if (!this.state.dataUrlsLoaded){
-      BarcodeGenerator.bulk_generate(this.props.data, this.props.rows, this.props.columns)
+      BarcodeGenerator.bulk_generate(this.props.data, this.props.options)
       .then((dataURLs) => {
         this.setState({
           dataUrlsLoaded: true,

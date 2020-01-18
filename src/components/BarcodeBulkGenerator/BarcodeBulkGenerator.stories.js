@@ -8,25 +8,23 @@ export default {
 
 var _generatePlaceholderData = function(qty){
     let placeholders = [];
-    for (let index = 0; index < qty; index++){
-         placeholders.push({
-             rowIndex: index,
-             rowTitle: "Placeholder("+index+")"
-         })
+    let start = Date.now();
+    for (let i = 0; i < qty; i++){
+        placeholders.push(start + i);
     }
     return placeholders;
 }
 
 
 export const Generate9On3X3 = () => (
-    <BarcodeBulkGenerator data={_generatePlaceholderData(9)} rows={3} columns={3}></BarcodeBulkGenerator>
+    <BarcodeBulkGenerator data={_generatePlaceholderData(9)} options={{rows: 3, cols: 3}}></BarcodeBulkGenerator>
 );
 
 
 export const Generate18On3x6 = () => (
-    <BarcodeBulkGenerator  data={_generatePlaceholderData(18)} rows={3} columns={6}></BarcodeBulkGenerator>
+    <BarcodeBulkGenerator  data={_generatePlaceholderData(18)} options={{rows: 3, cols: 6}}></BarcodeBulkGenerator>
 );
 
 export const Generate33On5x3 = () => (
-    <BarcodeBulkGenerator data={_generatePlaceholderData(33)} rows={5} columns={3}></BarcodeBulkGenerator>
+    <BarcodeBulkGenerator data={_generatePlaceholderData(33)} options={{rows: 5, cols: 3}}></BarcodeBulkGenerator>
 )

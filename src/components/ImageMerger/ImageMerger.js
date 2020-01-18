@@ -31,14 +31,16 @@ export default class ImageMerger {
                     // Whenever an entire column is filled, update the total canvas width and height
                     if ((index + 1) % columns === 0){
                         // Update the canvas dimension
-                        total_canvas_width = Math.max(total_canvas_width, current_row_width + col_sep * columns);
-                        total_canvas_height += current_row_height + row_sep;
+                        total_canvas_width = Math.max(total_canvas_width, current_row_width + col_sep * (columns-1));
+                        total_canvas_height += current_row_height 
+                            + ((index + 1) === sources.length ? 0 : row_sep);
+                   
                         // Reset current row width and height
                         current_row_width = 0;
                         current_row_height = 0;
                     } 
                     // If the last image was reached, but the column wasn't filled
-                    else if((index + 1) === sources.length){
+                    else if((index + 1  ) === sources.length){
                         // Update the canvas dimension
                         total_canvas_width = Math.max(total_canvas_width, current_row_width + (index + 1) % columns);
                         total_canvas_height += current_row_height;
@@ -52,6 +54,9 @@ export default class ImageMerger {
                 var ctx = canvas.getContext("2d");
                 canvas.width = total_canvas_width;
                 canvas.height = total_canvas_height;
+                // Fill the image with a white background
+                ctx.fillStyle = "white";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
                 // Draw the images in the canvas
                 var current_x = 0;
                 var current_y = 0;
@@ -97,8 +102,7 @@ export default class ImageMerger {
             image.onerror = image.onabort = function() {
                 reject(src);
             };
-            image.crossOrigin = "Anonymous";
-            image.src = "https://cors-anywhere.herokuapp.com/" + src;
+            image.src = src;
         });
     }
 
