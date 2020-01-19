@@ -74,3 +74,19 @@ export const Generate33On5x3 = () => (
         
     </BarcodeBulkGenerator>
 )
+
+export const Generate9On3X3Resized = () => (
+    <BarcodeBulkGenerator 
+        data={_generatePlaceholderData(9)} 
+        options= {{
+            rows: 3, 
+            cols: 3,
+            row_sep: 0,
+            col_sep: 0,
+            border: true,
+            borderWidth: 1,
+            borderPadding: 10,
+
+        }}>
+    </BarcodeBulkGenerator>
+);

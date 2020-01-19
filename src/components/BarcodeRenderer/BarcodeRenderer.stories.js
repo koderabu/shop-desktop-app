@@ -49,3 +49,37 @@ export const BarcodeWithPrefix = () => (
         prefix: "MV-"}}>
 </BarcodeRenderer> 
 )
+
+export const BarcodeResize = () => (
+    <div>
+        <BarcodeRenderer data={"Resized Barcode"} ></BarcodeRenderer>
+        <h3>75X30 resized:</h3>
+        <BarcodeRenderer 
+        data={"Resized Barcode"} 
+        options={{
+            fixedWidth: 75,
+            fixedHeight: 30 }}>
+        </BarcodeRenderer>
+        <h3>75X30 resized with border:</h3>
+        <BarcodeRenderer 
+        data={"Resized Barcode"} 
+        options={{
+            fixedWidth: 75,
+            fixedHeight: 30,
+            border: true,
+            borderWidth: 1 }}>
+        </BarcodeRenderer>
+        <h3>75X30 resized with border and a placeholder text:</h3>
+        <BarcodeRenderer 
+        data={"Resized Barcode"} 
+        options={{
+            fixedWidth: 75,
+            fixedHeight: 30,
+            border: true,
+            borderWidth: 1,
+            text: "Placeholder text",
+            fontSize: 10 }}>
+        </BarcodeRenderer>
+    </div>
+)
+
